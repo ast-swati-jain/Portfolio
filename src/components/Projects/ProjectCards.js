@@ -6,33 +6,54 @@ import { BsGithub } from "react-icons/bs";
 
 function ProjectCards(props) {
   return (
-    <Card className="project-card-view">
-      <Card.Img variant="top" src={props.imgPath} alt="card-img" />
-      <Card.Body>
-        <Card.Title>{props.title}</Card.Title>
-        <Card.Text style={{ textAlign: "justify" }}>
+    <Card className="project-card-view glass-card">
+      <div className="project-img-wrapper">
+        <Card.Img variant="top" src={props.imgPath} alt={props.title} className="project-card-img" />
+        {props.category && (
+          <span className="project-category-tag">{props.category}</span>
+        )}
+      </div>
+
+      <Card.Body className="d-flex flex-column">
+        <Card.Title className="project-card-title">{props.title}</Card.Title>
+
+        {props.tags && (
+          <div className="project-tags-row mb-3">
+            {props.tags.map((tag, i) => (
+              <span key={i} className="project-tag-pill">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <Card.Text className="project-card-description flex-grow-1">
           {props.description}
         </Card.Text>
-        <Button variant="primary" href={props.ghLink} target="_blank">
-          <BsGithub /> &nbsp;
-          {props.isBlog ? "Blog" : "GitHub"}
-        </Button>
-        {"\n"}
-        {"\n"}
 
-        {/* If the component contains Demo link and if it's not a Blog then, it will render the below component  */}
+        <div className="project-actions-row pt-3">
+          {props.ghLink && (
+            <Button
+              className="project-btn-github"
+              href={props.ghLink}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <BsGithub /> &nbsp;GitHub
+            </Button>
+          )}
 
-        {!props.isBlog && props.demoLink && (
-          <Button
-            variant="primary"
-            href={props.demoLink}
-            target="_blank"
-            style={{ marginLeft: "10px" }}
-          >
-            <CgWebsite /> &nbsp;
-            {"Demo"}
-          </Button>
-        )}
+          {props.demoLink && (
+            <Button
+              className="project-btn-demo"
+              href={props.demoLink}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <CgWebsite /> &nbsp;Live Demo
+            </Button>
+          )}
+        </div>
       </Card.Body>
     </Card>
   );
